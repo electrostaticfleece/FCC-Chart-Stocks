@@ -5,8 +5,7 @@ export default function(server) {
   const connections = [];
 
   socketServer.on('connection', socket => {
-    connections.push(socket);
-    console.log('We have ' + connections.length + ' browsers connected');
+    connections.push(socket)
 
     socket.on('disconnect', () => {
       const index = connections.indexOf(socket);

@@ -11,7 +11,6 @@ class ChartDisplay extends Component {
   }
 
   componentDidMount() {
-    const socket = io.connect(`${location.protocol}//${location.host}:${location.port}`);
   }
 
   render() {

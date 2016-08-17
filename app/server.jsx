@@ -12,6 +12,7 @@ const clientConfig = {
   port: process.env.PORT || '5000'
 };
 
+
 /*
  * Export render function to be used in server/config/routes.js
  * We grab the state passed in from the server and the req object from Express/Koa
@@ -21,7 +22,7 @@ export default function render(req, res) {
   const history = createMemoryHistory();
   const store = configureStore({
     user: {
-      message: 'Welcome to Stock Charter',
+      message: ''
     }
   }, history);
   const routes = createRoutes(store);

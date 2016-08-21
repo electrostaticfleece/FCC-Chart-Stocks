@@ -1,4 +1,4 @@
-//import * as types from 'types'; - Import types after actions have been created
+import * as types from 'types';
 import { combineReducers } from 'redux';
 
 const message = (
@@ -6,6 +6,8 @@ const message = (
   action
 ) => {
   switch(action.type) {
+    case types.NEW_STOCK_RECIEVED:
+      return 'New Stock for you';
     default: 
       return state;
   }

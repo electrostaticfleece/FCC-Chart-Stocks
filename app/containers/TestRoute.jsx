@@ -2,22 +2,16 @@ import React, {PropTypes, Component} from 'react';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import classNames from 'classnames/bind';
-import { addStock } from 'actions/chart';
 
 //cx = classNames.bind(styles);
 
-class ChartDisplay extends Component {
+class TestRoute extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    const { addStock } = this.props;
 
-    setTimeout(() => {
-      addStock({test: 'data'});
-    }, 5000);
-    
   }
 
   componentDidUpdate() {
@@ -27,8 +21,8 @@ class ChartDisplay extends Component {
   render() {
     return (
       <div>
-        <h1>Up and run!</h1>
-        <Link to={"test"} >A Link</Link>
+        <h1>Switched</h1>
+        <Link to={"/"} >A Link</Link>
       </div>
     )
   }
@@ -40,4 +34,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addStock })(ChartDisplay)
+export default connect(mapStateToProps)(TestRoute)

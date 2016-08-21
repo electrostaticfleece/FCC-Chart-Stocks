@@ -1,0 +1,3 @@
+export const GET_STOCK_DATA = 'GET_STOCK_DATA';
+export const NEW_STOCK_RECIEVED = 'NEW_STOCK_RECIEVED';
+export const ADD_STOCK = 'ADD_STOCK';

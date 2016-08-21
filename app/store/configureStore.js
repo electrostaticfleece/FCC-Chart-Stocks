@@ -6,10 +6,14 @@ import promiseMiddleware from 'middlewares/promiseMiddleware';
 import createLogger from 'redux-logger';
 
 
-export default function configureStore(initialState, history) {
+export default function configureStore(initialState, history, socketMiddleware) {
   // Installs hooks that always keep react-router and redux store in sync
   const middleware = [thunk, promiseMiddleware, routerMiddleware(history)];
-  let store;https://github.com/webpack/webpack
+  let store;
+
+  if(socketMiddleware){
+    middleware.push(socketMiddleware);
+  }
 
   if(__DEVCLIENT__) { 
     middleware.push(createLogger());

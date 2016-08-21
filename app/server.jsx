@@ -9,9 +9,8 @@ import header from 'components/Meta';
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
-  port: process.env.PORT || '5000'
+  port: process.env.PORT || '3000'
 };
-
 
 /*
  * Export render function to be used in server/config/routes.js
@@ -22,7 +21,7 @@ export default function render(req, res) {
   const history = createMemoryHistory();
   const store = configureStore({
     user: {
-      message: ''
+      message: '',
     }
   }, history);
   const routes = createRoutes(store);
@@ -76,7 +75,7 @@ export default function render(req, res) {
               ${header.title.toString()}
               ${header.meta.toString()}
               ${header.link.toString()}
-              <script type="text/javascript" charset="utf-8" src="/socket.io/socket.io.js"></script>
+              <script src="/socket.io/socket.io.js"></script>
             </head>
             <body>
               <div id="app">${componentHTML}</div>

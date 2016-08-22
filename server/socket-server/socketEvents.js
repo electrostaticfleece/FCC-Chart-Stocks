@@ -1,4 +1,4 @@
-import { getStock, getAllStocks } from '../API';
+import { getStock, getAllStocks } from '../api';
 import * as types from '../../app/types';
 
 const connections = [];

@@ -8,7 +8,7 @@ import createRoutes from 'routes';
 import configureStore from 'store/configureStore';
 import preRenderMiddleware from 'middlewares/preRenderMiddleware';
 import wrapper from 'middlewares/socketMiddleware';
-import createDirectory from 'createDirectory';
+import createDirectory from 'sockets/createDirectory';
 
 //Setup Directory for sockets
 //Pass directory to wrapper to create socket Middleware

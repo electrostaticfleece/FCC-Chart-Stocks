@@ -15,7 +15,7 @@ class ChartDisplay extends Component {
     const { addStock } = this.props;
 
     setTimeout(() => {
-      addStock({test: 'data'});
+      addStock('GOOG');
     }, 5000);
     
   }

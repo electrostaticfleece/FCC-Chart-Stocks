@@ -1,26 +1,37 @@
-import * as types from 'types';
+import * as types from 'types'
 
-export function newStock(data) {
+export function updateWidth(data) {
   return {
-    type: types.NEW_STOCK_RECIEVED,
-    payload: data,
-    meta: {
-      serverEmit: true
-    }
-  };
+    type: types.UPDATE_CHART_WIDTH,
+    payload: data
+  }
 }
 
-export function addStock(data) {
+export function updateDimensions(data) {
+  if(data.height && data.margin && data.margin.top && data.margin.bottom) {
+    data.adjHeight = data.height - data.margin.top - data.margin.bottom;
+  }
+
+  if(data.width && data.margin && data.margin.left && data.margin.right) {
+    data.adjWidth = data.width - data.margin.left - data.margin.right;
+  }
+  
   return {
-    type: types.ADD_STOCK,
-    payload: data,
-    meta: {
-      socketName: 'main'
-    }
-  };
+    type: types.UPDATE_CHART_DIMENSIONS,
+    payload: data
+  }
 }
 
-export default {
-  newStock,
-  addStock
+export function updateHeight(data) {
+  return {
+    type: types.UPDATE_CHART_HEIGHT,
+    payload: data
+  }
+}
+
+export function changeType(data) {
+  return {
+    type: types.CHANGE_CHART_TYPE,
+    payload: data
+  }
 }

@@ -4,13 +4,15 @@ import http from 'http';
 import path from 'path';
 
 import socketServer from './socket-server';
+import { connect } from './db';
 
 const App = require('../public/assets/server');
 const app = express();
 const server = http.Server(app);
-
-
 app.set('socketPort', (process.env.PORT || 5000));
+
+//Connect to Postgres and register Schema
+connect();
 
 //All socket requests are passed to the socket server
 socketServer(server);

@@ -21,7 +21,7 @@ const stockCall = axios.create({
  * */
 
 //Get stock data for the past year
-export function getStock(ticker) {
+export function lookUpSingle(ticker) {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth() + 1;
@@ -35,7 +35,8 @@ export function getStock(ticker) {
       id: dataset.id,
       ticker: dataset.dataset_code,
       name: dataset.name,
-      data: dataset.data
+      data: dataset.data,
+      column_names: dataset.column_names
     };
   }
   
@@ -52,11 +53,12 @@ export function getStock(ticker) {
 //After the resolution of the returned promise 
 //a stock object is created to hydrate the state
 //of the application and/or be placed in the database. 
-export function getAllStocks(stockMetaData){
+export function lookUpAll(stockMetaData){
   const stocks = {};
+  const stockIndex = [];
 
   const stockPromises = stockMetaData.map((stock) => {
-    return getStock(stock.ticker)
+    return lookUpSingle(stock.ticker);
   });
 
   return Promise.all(stockPromises)
@@ -64,9 +66,13 @@ export function getAllStocks(stockMetaData){
     stockData.forEach((res) => {
       const { data } = res
       stocks[data.ticker] = data;
+      stockIndex.push(data.ticker);
     });
 
-    return stocks
+    return {
+      stocks,
+      stockIndex
+    }
 
   });
 }

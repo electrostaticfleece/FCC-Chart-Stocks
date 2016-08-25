@@ -1,4 +1,4 @@
-import actionCreators from 'actions/chart';
+import actionCreators from 'actions/stocks';
 
 export default function bindEmits(socket, dispatch) {
   let actionKeys = Object.keys(actionCreators);

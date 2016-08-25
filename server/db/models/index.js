@@ -2,17 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import sequelizeConfig from '../sequelize_config';
-
-const config = sequelizeConfig[process.env.NODE_ENV];
+const ENV = process.env.NODE_ENV;
+const config = sequelizeConfig[ENV];
 const basename = path.basename(module.filename);
 const db = {};
 let sequelize;
-
 const dbUrl = process.env[config.use_env_variable];
+
 if (dbUrl) {
   sequelize = new Sequelize(dbUrl);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  const line = (ENV === 'development') ? 3 : 11;
+  throw new TypeError('use_env_variable is not defined', 'sequelize_config.js', line);
 }
 
 fs

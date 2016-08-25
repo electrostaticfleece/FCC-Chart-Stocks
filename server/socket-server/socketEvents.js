@@ -1,5 +1,6 @@
-import { getStock, getAllStocks } from '../api';
+import { lookUpSingle, lookUpAll } from '../api';
 import * as types from '../../app/types';
+import {stocks as stockController} from '../db/controllers';
 
 const connections = [];
 
@@ -14,35 +15,56 @@ export function logConnection(socket) {
 export function getSingleStock(socket){
   return (ticker) => {
 
-    return getStock(ticker)
+    return lookUpSingle(ticker)
     .then((res) => {
       const { data } = res;
-      socket.emit(types.NEW_STOCK_RECIEVED, {[data.ticker]: data});
-      socket.broadcast(types.NEW_STOCK_RECIEVED, {[data.ticker]: data});
 
-      return data
-    }).then((data) => {
-      
-    }).catch((err) => {
-      socket.emit(types.ADD_STOCK_FAILURE, err);
+      socket.emit(types.NEW_STOCK_RECIEVED, data);
+      socket.broadcast.emit(types.NEW_STOCK_RECIEVED, data);
+      stockController.add(data);
+    })
+    .catch((err) => {
+
+      socket.emit(types.ADD_STOCK_FAILURE, {ticker: ticker, error: err});
     });
   };
 };
 
 //Hydrates the applications initial state of the application
-//and returns a promise that may be used to update the database
+//by selecting stocks from the database, getting their data values
+//via API requests, and emitting the results to the user
 export function hydrateStocks(socket) {
-  return (stocks) => {
+  return () => {
 
-    return getAllStocks(stocks)
+    stockController.getAll()
+    .then(lookUpAll)
     .then((stocks) => {
+
       socket.emit(types.HYDRATE_STOCKS_SUCCESS, stocks);
     })
     .catch((err) => {
-      console.log('Something went wrong...');
+
+      console.log('Something went wrong hydrating the state');
       socket.emit(types.HYDRATE_STOCKS_FAILURE, err);
     });
   };
+};
+
+
+//Deletes a stock from the server and emits the results
+//to all users logged on to the site.
+export function deleteStock(socket) {
+  return (stock) => {
+    return stockController.destroy(stock)
+    .then(() => {
+      console.log('The stock before emit is: ', stock);
+      socket.broadcast.emit(types.STOCK_DELETED, stock);
+    })
+    .catch((err) => {
+
+      socket.emit(types.DELETE_STOCK_FAILURE, {stock, error: err});
+    })
+  }
 };
 
 //Logs when a user has disconnected from a page
@@ -62,6 +84,7 @@ export default {
   postConnection: {
     [types.ADD_STOCK]: getSingleStock,
     [types.HYDRATE_STOCKS_REQUEST]: hydrateStocks,
-    [types.DISCONNECT] : logDisconnect
+    [types.DISCONNECT] : logDisconnect,
+    [types.DELETE_STOCK_REQUEST]: deleteStock
   }
 };

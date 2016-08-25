@@ -2,8 +2,9 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from 'containers/App';
-import ChartDisplay from 'containers/ChartDisplay';
-import TestRoute from 'containers/TestRoute';
+//import ChartDisplay from 'containers/ChartDisplay';
+import Dashboard from 'containers/Dashboard';
+import { hydrateState } from 'actions/stocks';
 
 /*
  * @param {Redux Store}
@@ -18,20 +19,19 @@ export default (store, directory) => {
       const { dispatch } = store;
       directory.connect();
       directory.syncEmit(dispatch, 'main');
+      dispatch(hydrateState());
     }
   }
 
   function disconnectSockets() {
     if (directory && store) {
-      console.log('exiting');
       directory.disconnectAll();
     }
   }
 
   return (
     <Route path="/" component = { App } >
-      <IndexRoute component = { ChartDisplay } onEnter = { connectSocket } onLeave = { disconnectSockets } />
-      <Route path="test" component = { TestRoute } />
+      <IndexRoute component = { Dashboard } onEnter = { connectSocket } onLeave = { disconnectSockets } />
     </Route>
   );
 };

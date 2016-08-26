@@ -19,3 +19,5 @@ export const CHANGE_CHART_TYPE = 'CHANGE_CHART_TYPE';
 
 //Disconnect is in lower case to correspond to socket.io data
 export const DISCONNECT = 'disconnect';
+
+export const TYPING = 'TYPING';

@@ -82,9 +82,9 @@ const margin = (
     top: 20, 
     right: 80, 
     bottom: 90, 
-    left: 50
+    left: 70
   },
-    action
+  action
 ) => {
   switch(action.type) {
     default: 

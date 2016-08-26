@@ -13,6 +13,18 @@ const message = (
   }
 }
 
+const input = (
+  state = '',
+  action
+) => {
+  switch(action.type) {
+    case types.TYPING: 
+      return action.payload
+    default:
+      return state;
+  }
+}
+
 const id = (
   state = null,
   action
@@ -25,6 +37,7 @@ const id = (
 
 const userReducer = combineReducers({
   message,
+  input,
   id
 });
 

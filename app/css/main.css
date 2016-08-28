@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=Hind+Vadodara:400,700|Quicksand:300,400);
+@import 'common/typography';
+@import 'common/colors';
+
+
+body {
+  background-color: var(--mineShaft);
+  color: var(--merino);
+  font-family: var(--fontHindVadodara);
+  margin: 0;
+  overflow-y: hidden;
+}
+
+label {
+  font-size: var(--fontMedium);
+  color: var(--wildStrawberry);
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+}

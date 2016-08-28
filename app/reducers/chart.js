@@ -7,11 +7,23 @@ const type = (
 ) => {
   switch(action.type) {
     case types.CHANGE_CHART_TYPE:
-      return action.payload.name
+      return action.payload.name;
     default:
       return state;
   }
 };
+
+const view = (
+  state = 'year',
+  action
+) => {
+  switch(action.type) {
+    case types.CHANGE_CHART_VIEW:
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
 const graphNum = (
   state = 4,
@@ -80,9 +92,9 @@ const adjHeight = (
 const margin = (
   state = {
     top: 20, 
-    right: 80, 
+    right: 10, 
     bottom: 90, 
-    left: 70
+    left: 80
   },
   action
 ) => {
@@ -95,6 +107,7 @@ const margin = (
 const chartReducer = combineReducers({
   type,
   graphNum,
+  view,
   height,
   adjHeight,
   adjWidth,

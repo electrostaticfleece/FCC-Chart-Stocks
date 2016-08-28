@@ -1,5 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames/bind';
+import styles from 'css/components/stockList';
+import { ordinalColors } from 'utilityFunctions';
+
+const cx = classNames.bind(styles);
 
 class StockList extends Component {
   constructor(props) {
@@ -22,25 +26,30 @@ class StockList extends Component {
       value = {'x'}
       onClick = {this.deleteStock}
       name = {name}
+      className = {cx('deleteBtn')}
     />
   }
 
   listStocks() {
     const { stocks , deleteStockRequest } = this.props;
     return stocks.stockIndex.map((stock) => {
+      const name = stocks.stocks[stock].name
       const deleteButton = (deleteStockRequest)  ? this.deleteButton(stock) : null
+      const url = name.slice(0, name.indexOf('(')).trim();
       return (
-        <div key = {stock} >
-          <li>{stock}</li>
-          {deleteButton}
-        </div>
+        <a href = {'https://www.google.com/#q=' + url} target={'_blank'} rel={"noopener noreferrer"} >
+          <div key = {stock} className={cx('stockListItem')} >
+            <li className={cx('stockName')}>{stock}</li>
+            {deleteButton}
+          </div>
+        </a>
       )
     })
   }
 
   render() {
     return (
-      <ul>
+      <ul className = {cx('stockList')}>
         { this.listStocks() }
       </ul>
     )

@@ -1,0 +1,13 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

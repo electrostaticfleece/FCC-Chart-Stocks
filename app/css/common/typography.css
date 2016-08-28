@@ -1,0 +1,9 @@
+:root {
+  --fontHindVadodara: 'Hind Vadodara', Helvetica, Arial, sans-serif;
+  --fontQuicksand: 'Quicksand', Helvetica, Arial, sans-serif;
+
+  --fontSmall: 12px;
+  --fontMedium: 16px;
+  --fontLarge: 22px;
+  --fontHuge: 28px;
+}

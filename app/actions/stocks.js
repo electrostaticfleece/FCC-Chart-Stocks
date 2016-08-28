@@ -13,8 +13,11 @@ export function addStock(data) {
 };
 
 export function addStockFailure(data) {
+  if(data) {
+    console.log(data.error)
+  }
   return {
-    type: types.ADD_STOCK,
+    type: types.ADD_STOCK_FAILURE,
     payload: data,
     meta: {
       serverEmit: true

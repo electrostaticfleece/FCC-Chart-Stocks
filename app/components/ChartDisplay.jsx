@@ -9,11 +9,23 @@ class ChartDisplay extends Component {
   constructor(props) {
     super(props);
     this.handleResize = this.handleResize.bind(this);
+    this.state = {
+      lastWidth: NaN
+    }
   }
 
   handleResize(e) {
     const { chart: { margin }, updateDimensions } = this.props;
     const el = this.refs.chart;
+    const width = window.innerWidth || document.documentElement.clientWidth|| document.body.clientWidth;
+
+    //Move the scrollbar to the top of the page when the window
+    //resizes. Otherwise, the scrollbar moves %5 of the way down
+    //and disappears. Leaving an annoying view.  
+    if(this.state.lastWidth < 900 && width > 900){
+       window.scroll(0, 0);
+    }
+    this.setState({lastWidth: width}); 
 
     updateDimensions({width: el.offsetWidth, height: el.offsetHeight, margin});
   }

@@ -1,4 +1,11 @@
 .chartWrap {
-  width: 100%;
+  width: 75%;
   height: 500px;
+  margin: 20px 30px 0 30px;
+}
+
+@media (max-width: 900px) {
+  .chartWrap {
+    width: 100%;
+  }
 }

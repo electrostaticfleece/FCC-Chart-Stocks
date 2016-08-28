@@ -1,0 +1,19 @@
+@import '../common/colors';
+
+.search {
+  background-color: black;
+  border: 1px solid;
+  border-color: var(--cello);
+  color: var(--merino);
+  margin-top: 5px;
+  width: 200px;
+  max-width: 300px;
+  padding: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+@media(max-width: 900px) {
+  .search {
+    width: 300px;
+  }
+}

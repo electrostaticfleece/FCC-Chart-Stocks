@@ -3,6 +3,10 @@ import classNames from 'classnames/bind';
 import SelectChart from 'components/SelectChart';
 import AddStock from 'components/AddStock';
 import StockList from 'components/StockList';
+import ChangeView from 'components/ChangeView';
+import styles from 'css/components/stockInterface';
+
+const cx = classNames.bind(styles);
 
 class StockInterface extends Component {
   constructor(props) {
@@ -15,10 +19,11 @@ class StockInterface extends Component {
   }
 
   render() {
-    const { stocks, chart, actions: {changeType, typing, addStock}, userInput, deleteStockRequest } = this.props;
+    const { stocks, chart, actions: {changeType, typing, addStock, changeView}, userInput, deleteStockRequest } = this.props;
     return (
-      <div>
-        <form onSubmit = { this.handleSubmit }>
+      <div className={cx('interface')}>
+        <ChangeView changeView = { changeView } />
+        <form onSubmit = { this.handleSubmit } className={cx('interfaceForm')} >
           <SelectChart 
             stocks = { stocks }
             changeGraphType = { changeType }

@@ -17,6 +17,7 @@ export function getSingleStock(socket){
 
     return lookUpSingle(ticker)
     .then((res) => {
+      console.log(res);
       const { data } = res;
 
       socket.emit(types.NEW_STOCK_RECIEVED, data);
@@ -25,7 +26,7 @@ export function getSingleStock(socket){
     })
     .catch((err) => {
 
-      socket.emit(types.ADD_STOCK_FAILURE, {ticker: ticker, error: err});
+      socket.emit(types.ADD_STOCK_FAILURE, {ticker: ticker, error: err.toString()});
     });
   };
 };

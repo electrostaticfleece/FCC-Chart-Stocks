@@ -1,5 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames/bind';
+import styles from 'css/components/selectChart';
+
+const cx = classNames.bind(styles);
 
 class SelectChart extends Component {
   constructor(props) {
@@ -33,9 +36,12 @@ class SelectChart extends Component {
   render() {
     const { stocks: { stocks, stockIndex }} = this.props;
     return (
-      <select onChange={ this.switchChart }>
-        {this.getChartTypes(stockIndex, stocks)}
-      </select>
+      <div className={cx('selectChart')}>
+        <label>Chart </label>
+        <select onChange={ this.switchChart } id={'selectChart'} className={cx('select')}>
+          {this.getChartTypes(stockIndex, stocks)}
+        </select>
+      </div>
     )
   }
 }

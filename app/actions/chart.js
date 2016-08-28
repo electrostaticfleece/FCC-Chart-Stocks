@@ -35,3 +35,10 @@ export function changeType(data) {
     payload: data
   }
 }
+
+export function changeView(data) {
+  return {
+    type: types.CHANGE_CHART_VIEW,
+    payload: data
+  }
+}

@@ -16,6 +16,7 @@ export const UPDATE_CHART_WIDTH = 'UPDATE_WIDTH';
 export const UPDATE_CHART_HEIGHT = 'UPDATE_CHART_HEIGHT';
 export const UPDATE_CHART_DIMENSIONS = 'UPDATE_CHART_DIMENSIONS';
 export const CHANGE_CHART_TYPE = 'CHANGE_CHART_TYPE';
+export const CHANGE_CHART_VIEW = 'CHANGE_CHART_VIEW';
 
 //Disconnect is in lower case to correspond to socket.io data
 export const DISCONNECT = 'disconnect';

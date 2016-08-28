@@ -1,5 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames/bind';
+import styles from 'css/components/addStock'
+
+const cx = classNames.bind(styles);
 
 class AddStock extends Component {
   constructor(props) {
@@ -14,21 +17,30 @@ class AddStock extends Component {
   }
 
   handleSubmit(e) {
-    const { addStock } = this.props;
-    console.log(e.key);
+    const { addStock, typing } = this.props;
     if(e.key === 'Enter') {
       addStock(e.target.value);
+      typing('');
     }
   }
 
   render() {
+    const { userInput } = this.props;
     return (
-      <input 
-        type={'text'} 
-        placeholder={'Search for a Stock to Add'} 
-        onChange={this.onChange} 
-        onKeyPress={this.handleSubmit}
-      />
+      <div>
+        <label htmlFor={'addStock'} >
+          Add Stock
+        </label>
+        <input 
+          type={'text'}
+          value={userInput}
+          placeholder={'Search by ticker symbol (e.g. FB)'} 
+          id = {'addStock'}
+          onChange={this.onChange} 
+          onKeyPress={this.handleSubmit}
+          className={cx('search')}
+        />
+      </div>
     )
   }
 }

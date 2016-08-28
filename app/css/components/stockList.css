@@ -1,0 +1,67 @@
+@import '../common/typography';
+@import '../common/colors';
+
+.stockList {
+  margin-top: 40px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+}
+
+.stockList a:hover, a:visited, a:link, a:active, a{
+  text-decoration: none;
+  color: var(--merino);
+  width: 200px;
+}
+
+.stockListItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  padding: 3.5px;
+}
+
+.stockList:first-child {
+  border-top: 1px solid;
+}
+
+.stockListItem:hover {
+  background-color: #34345d;
+  cursor: pointer;
+}
+
+.stockName {
+  display: inline-block;
+}
+
+.deleteBtn {
+  display: inline-block;
+  background: none;
+  border: 0px solid;
+  padding: 0px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: var(--fontMedium);
+  font-weight: 700;
+}
+
+.deleteBtn:hover {
+  color: var(--wildStrawberry);
+}
+
+@media (max-width: 900px) {
+  .stockList {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .stockList a{
+    margin: 0 20px;
+  }
+
+  .stockListItem {
+    padding: 5px 0;
+  }
+}

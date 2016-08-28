@@ -22,13 +22,13 @@ class StockInterface extends Component {
     const { stocks, chart, actions: {changeType, typing, addStock, changeView}, userInput, deleteStockRequest } = this.props;
     return (
       <div className={cx('interface')}>
-        <ChangeView changeView = { changeView } />
         <form onSubmit = { this.handleSubmit } className={cx('interfaceForm')} >
           <SelectChart 
             stocks = { stocks }
             changeGraphType = { changeType }
             graphNum = { chart.graphNum }
           />
+          <ChangeView changeView = { changeView } view = { chart.view }/>
           <AddStock 
             typing = { typing } 
             userInput = { userInput } 

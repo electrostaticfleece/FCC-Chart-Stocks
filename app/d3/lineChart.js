@@ -3,11 +3,13 @@ import classNames from 'classnames/bind';
 import styles from 'css/components/chart';
 
 const cx = classNames.bind(styles);
+const parseTime = d3.timeParse('%Y-%m-%d');
 let stockChart = {};
 
 stockChart.create = function(element, data, state) {
   let { width, height, margin } = state;
 
+  //Create the initial svgs and groups
   let svg = d3.select(element).append('svg')
     .attr('class', 'chart')
 
@@ -24,17 +26,24 @@ stockChart.create = function(element, data, state) {
 };
 
 stockChart.update = function(element, data, state) {
-  let timeFrame;
-  const today = Date.now();
-  const newData = {stockIndex: [...data.stockIndex], stocks: {}};
   if(data.stockIndex.length < 1) {
     return null;
   }
+  let newData = this._filterData(data, state);
+  let scales = this._setScales(element, newData, state);
+
+  this._setDimensions(state);
+  this._drawAxes(element, scales, newData, state);
+  this._graphLines(newData, state, scales);
+  this._setStyles();
+};
+
+stockChart._filterData = function(data, state) {
+  const today = Date.now();
+  const newData = {stockIndex: [...data.stockIndex], stocks: {}};
+  let timeFrame;
 
   switch(state.view) {
-    case 'year':
-      timeFrame = 0;
-      break;
     case '6 months':
       timeFrame = today - (86400000*183);
       break;
@@ -46,9 +55,15 @@ stockChart.update = function(element, data, state) {
       break;
     case '1 week':
       timeFrame = today - (86400000*7);
+      break;
+    case 'year':
+    default:
+      timeFrame = 0;
+      break;
   }
 
-  //Write to a new stock object, so we don't write directly to props
+  //Rewrite object properties to a new data object, so we don't
+  //risk altering the props object.
   data.stockIndex.forEach((ticker) => {
     newData.stocks[ticker] = {...data.stocks[ticker]};
     newData.stocks[ticker].data = data.stocks[ticker].data.filter((stock) => {
@@ -59,14 +74,8 @@ stockChart.update = function(element, data, state) {
     });
   });
 
-
-  let scales = this._setScales(element, newData, state);
-
-  this._setDimensions(state);
-  this._drawAxes(element, scales, newData, state);
-  this._graphLines(newData, state, scales);
-  this._setStyles();
-};
+  return newData;
+}
 
 stockChart._setDimensions = function(state) {
   const { width, height, margin} = state;
@@ -92,7 +101,6 @@ stockChart._setScales = function(element, data, state) {
 
 stockChart._setDomains = function(data, graphNum, view) {
   const { stockIndex, stocks } = data;
-  const parseTime = d3.timeParse('%Y-%m-%d');
 
   const allStocks = stockIndex.reduce((prev, next) => {
     return prev.concat(stocks[next].data);
@@ -110,8 +118,11 @@ stockChart._drawAxes = function(element, scales, data, state) {
   const xAxis = d3.select('.axis-x');
   const yAxis = d3.select('.axis-y');
   const tick = d3.selectAll('.tick');
+  const removeLabel = d3.select('.y-label').remove();
 
   xAxis
+    .transition()
+    .duration(1000)
     .attr("transform", "translate(0," + adjHeight + ")")
     .call(d3.axisBottom(scales.x))
     .selectAll('text')
@@ -120,12 +131,11 @@ stockChart._drawAxes = function(element, scales, data, state) {
     .attr('y', 4);
 
   yAxis
+    .transition()
+    .duration(1000)
     .call(d3.axisLeft(scales.y))
-    .select('.y-label')
-    .remove()
 
   yAxis
-    .call(d3.axisLeft(scales.y))
     .append('text')
     .attr('class', 'y-label')
     .attr('transform', 'rotate(-90)')
@@ -141,27 +151,42 @@ stockChart._graphLines = function(data, state, scales) {
   const { stocks, stockIndex } = data;
   const { graphNum } = state;
 
+  //Map over the data and only return the date
+  //and the data for the graph we are depicting
+  const stocksArr = stockIndex.map((ticker) => {
+    return stocks[ticker].data.map((values) => {
+      return [ticker, values[0], values[graphNum]];
+    });
+  });
+
   const g = d3.select('.' + 'groups');
-  const parseTime = d3.timeParse('%Y-%m-%d');
   const line = d3.line()
-    .curve(d3.curveBasis)
-    .x(function(d) { return scales.x(parseTime(d[0])); })
-    .y(function(d) { return scales.y(d[graphNum]); });
+    .curve(d3.curveLinear)
+    .x(function(d) { return scales.x(parseTime(d[1])); })
+    .y(function(d) { return scales.y(d[2]); });
 
-  d3.selectAll('.stock').remove();
+  //Draw all of the stocks lines
+  const stock = g.selectAll('.line')
+    .data(stocksArr)
+    .attr('class', 'line');
 
-  const stock = g.selectAll('stocks')
-    .data(stockIndex)
+  //Transition from previous paths to new ones
+  stock.transition().ease(d3.easeExpOut).duration(1000)
+    .attr('d', function(d) { return line(d); })
+    .style('stroke', function(d) { return scales.z(d); });
+
+  //Enter new lines
+  stock
     .enter()
-    .append('g')
-    .attr('class', 'stock');
-
-  stock.append('path')
+    .append('path')
     .attr('class', 'line')
     .attr('fill', 'none')
     .attr('stroke-width', 2)
-    .attr('d', function(d) { return line(stocks[d].data); })
+    .attr('d', function(d) { return line(d); })
     .style('stroke', function(d) { return scales.z(d); });
+
+  //Exit
+  stock.exit().remove();
 }
 
 stockChart._setStyles = function() {

@@ -2,7 +2,7 @@
 @import '../common/colors';
 
 .stockList {
-  margin-top: 40px;
+  margin-top: 20px;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,11 @@
 .stockList a:hover, a:visited, a:link, a:active, a{
   text-decoration: none;
   color: var(--merino);
-  width: 200px;
+}
+
+.stockList a:hover {
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .stockListItem {
@@ -20,7 +24,8 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid;
-  padding: 3.5px;
+  padding: 5px 3.5px;
+  width: 200px;
 }
 
 .stockList:first-child {
@@ -29,7 +34,6 @@
 
 .stockListItem:hover {
   background-color: #34345d;
-  cursor: pointer;
 }
 
 .stockName {
@@ -40,6 +44,7 @@
   display: inline-block;
   background: none;
   border: 0px solid;
+  color: var(--merino);
   padding: 0px;
   margin-right: 10px;
   cursor: pointer;
@@ -57,11 +62,12 @@
     flex-wrap: wrap;
   }
 
-  .stockList a{
-    margin: 0 20px;
+  .stockName{
+    margin: 0 10px;
   }
 
   .stockListItem {
     padding: 5px 0;
+    margin: 10px 40px 10px 0px;
   }
 }

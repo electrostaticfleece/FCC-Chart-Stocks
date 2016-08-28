@@ -37,12 +37,14 @@ class StockList extends Component {
       const deleteButton = (deleteStockRequest)  ? this.deleteButton(stock) : null
       const url = name.slice(0, name.indexOf('(')).trim();
       return (
-        <a href = {'https://www.google.com/#q=' + url} target={'_blank'} rel={"noopener noreferrer"} >
-          <div key = {stock} className={cx('stockListItem')} >
-            <li className={cx('stockName')}>{stock}</li>
+          <div  className={cx('stockListItem')} >
+            <li className={cx('stockName')}>
+              <a key = {stock} href = {'https://www.google.com/#q=' + url} target={'_blank'} rel={"noopener noreferrer"} >
+                {stock}
+              </a>
+            </li>
             {deleteButton}
           </div>
-        </a>
       )
     })
   }

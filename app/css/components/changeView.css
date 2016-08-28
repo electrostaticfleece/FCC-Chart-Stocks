@@ -1,0 +1,37 @@
+@import '../common/typography';
+@import '../common/colors';
+
+.timeFrame {
+  margin-bottom: 25px;
+  width: 210px;
+}
+
+.buttons {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.timeBtn {
+  background: none;
+  margin: 10px 15px 10px 15px;
+  color: var(--electricLime);
+  cursor: pointer;
+  border: 2px solid var(--electricLime);
+  border-radius: 15px;
+  padding: 4px;
+  width: 70px;
+  font-family: var(--fontHindVadodara);
+}
+
+.timeBtn:hover, .selected{
+  background-color: var(--electricLime);
+  color: black;
+}
+
+.timeBtn:focus, .timeBtn:active {
+  outline: 0;
+}
+

@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { updateDimensions, changeType, changeView } from 'actions/chart';
+import { updateDimensions, changeType, changeView, selectDate } from 'actions/chart';
 import  { typing } from 'actions/user';
 import { addStock, deleteStockRequest } from 'actions/stocks';
+import Spinner from 'components/Spinner';
 import ChartDisplay from 'components/ChartDisplay';
 import classNames from 'classnames/bind';
 import StockInterface from 'components/stockInterface';
@@ -15,15 +16,20 @@ class Dashboard extends Component {
     super(props);
   }
 
+
   render() {
-    const { stocks, chart, updateDimensions, changeType, typing, addStock, user: { input }, deleteStockRequest, changeView } = this.props;
+    const { stocks, chart, updateDimensions, changeType, typing, selectDate, addStock, user: { input }, deleteStockRequest, changeView } = this.props;
     return (
       <div className = {cx('dashboard')}>
-        <ChartDisplay 
-          stocks = { stocks } 
-          chart = { chart }
-          updateDimensions = { updateDimensions } 
-        />
+        { stocks.stockIndex.length < 1 && !chart.loaded ? 
+          <Spinner />  :
+          <ChartDisplay 
+            stocks = { stocks } 
+            chart = { chart }
+            updateDimensions = { updateDimensions } 
+            selectDate = {selectDate}
+          /> 
+        }
         <StockInterface 
           stocks = { stocks }
           chart = { chart }
@@ -44,4 +50,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { updateDimensions, changeType, typing, addStock, deleteStockRequest, changeView })(Dashboard);
+export default connect(mapStateToProps, { updateDimensions, selectDate, changeType, typing, addStock, deleteStockRequest, changeView })(Dashboard);

@@ -25,19 +25,20 @@ class ChartDisplay extends Component {
     if(this.state.lastWidth < 900 && width > 900){
        window.scroll(0, 0);
     }
+    
     this.setState({lastWidth: width}); 
 
     updateDimensions({width: el.offsetWidth, height: el.offsetHeight, margin});
   }
 
   componentDidMount() {
-    const { stocks, chart, updateDimensions } = this.props;
+    const { stocks, chart, updateDimensions, selectDate } = this.props;
     const el = this.refs.chart;
     const width = el.offsetWidth;
     const height = el.offsetHeight;
 
     updateDimensions({width, height, margin: chart.margin});
-    stockChart.create(el, stocks, chart);
+    stockChart.create(el, stocks, chart, {selectDate});
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -46,15 +47,20 @@ class ChartDisplay extends Component {
   }
 
   componentDidUpdate() {
-    const {stocks, chart} = this.props;
+    const {stocks, chart, selectDate} = this.props;
     const el = this.refs.chart;
 
-    stockChart.update(el, stocks, chart);
+    stockChart.update(el, stocks, chart, {selectDate});
   }
 
   render() {
     return (
-      <div className={cx('chartWrap')} ref={'chart'}>
+      <div className={cx('displayWrap')}>
+        <div className={cx('chartWrap')} ref={'chart'}>
+        </div>
+        <div className={cx('data')} >
+          
+        </div>
       </div>
     )
   }

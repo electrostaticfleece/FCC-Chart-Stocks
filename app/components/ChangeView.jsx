@@ -21,7 +21,6 @@ class ChangeView extends Component {
 
   render() {
     const { view } = this.props;
-    console.log(view);
     return (
       <div className={cx('timeFrame')}>
         <label>Timeframe</label>

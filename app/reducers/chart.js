@@ -1,6 +1,18 @@
 import * as types from 'types';
 import { combineReducers } from 'redux';
 
+const loaded = (
+  state = false,
+  action
+) => {
+  switch(action.type) {
+    case types.HYDRATE_STOCKS_SUCCESS:
+      return true;
+    default: 
+      return state;
+  }
+}
+
 const type = (
   state = 'Close',
   action
@@ -8,6 +20,18 @@ const type = (
   switch(action.type) {
     case types.CHANGE_CHART_TYPE:
       return action.payload.name;
+    default:
+      return state;
+  }
+};
+
+const selected = (
+  state = false,
+  action
+  ) => {
+  switch(action.type) {
+    case types.SELECT_DATE:
+      return action.payload;
     default:
       return state;
   }
@@ -111,7 +135,9 @@ const chartReducer = combineReducers({
   height,
   adjHeight,
   adjWidth,
+  loaded,
   width,
+  selected,
   margin
 });
 

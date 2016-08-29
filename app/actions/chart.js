@@ -42,3 +42,10 @@ export function changeView(data) {
     payload: data
   }
 }
+
+export function selectDate(data) {
+  return {
+    type: types.SELECT_DATE,
+    payload: data
+  }
+}

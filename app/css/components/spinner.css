@@ -1,0 +1,25 @@
+.wrapper {
+  flex-grow: 2;
+  text-align: center;
+}
+
+.spinner {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: spin;
+  animation-timing-function: linear;
+  margin: 200px auto;
+}
+
+.spinner path {
+  fill: #00dffc;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

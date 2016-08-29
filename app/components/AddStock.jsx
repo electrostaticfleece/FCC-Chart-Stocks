@@ -19,6 +19,7 @@ class AddStock extends Component {
   handleSubmit(e) {
     const { addStock, typing } = this.props;
     if(e.key === 'Enter') {
+      e.preventDefault();
       addStock(e.target.value);
       typing('');
     }

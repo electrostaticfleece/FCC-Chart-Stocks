@@ -27,8 +27,9 @@ class SelectChart extends Component {
     const chartTypes = stocks[stockIndex[0]].column_names.slice(1);
 
     return chartTypes.map((chart, i) => {
+      const selected = (chart ==='Close');
       return (
-        <option key={i + 1} value={chart}>{chart}</option>
+        <option key={i + 1} value={chart} >{chart}</option>
       )
     })
   }
@@ -38,7 +39,7 @@ class SelectChart extends Component {
     return (
       <div className={cx('selectChart')}>
         <label>Chart </label>
-        <select onChange={ this.switchChart } id={'selectChart'} className={cx('select')}>
+        <select onChange={ this.switchChart } id={'selectChart'} className={cx('select')} defaultValue = {'Close'}>
           {this.getChartTypes(stockIndex, stocks)}
         </select>
       </div>

@@ -10,14 +10,22 @@ class StockList extends Component {
     super(props);
     this.deleteButton = this.deleteButton.bind(this);
     this.deleteStock = this.deleteStock.bind(this);
+    this.state = {
+      deleted: null
+    }
   }
 
   deleteStock(e) {
     e.preventDefault();
+    e.persist()
 
     const { deleteStockRequest, stocks: { stocks } } = this.props;
+    this.setState({deleted: stocks[e.target.name].ticker});
 
-    deleteStockRequest(stocks[e.target.name]);
+    setTimeout(() => {
+      deleteStockRequest(stocks[e.target.name]);
+      this.setState({deleted: null});
+    }, 250)
   }
 
   deleteButton(name) {
@@ -32,14 +40,20 @@ class StockList extends Component {
 
   listStocks() {
     const { stocks , deleteStockRequest } = this.props;
-    return stocks.stockIndex.map((stock) => {
+    const shortList = stocks.stockIndex.filter((stock, i) => i < 10);
+    return shortList.map((stock) => {
       const name = stocks.stocks[stock].name
       const deleteButton = (deleteStockRequest)  ? this.deleteButton(stock) : null
       const url = name.slice(0, name.indexOf('(')).trim();
       return (
-          <div  className={cx('stockListItem')} >
+          <div key = {stock}  className={cx('stockListItem')} >
             <li className={cx('stockName')}>
-              <a key = {stock} href = {'https://www.google.com/#q=' + url} target={'_blank'} rel={"noopener noreferrer"} >
+              <a 
+                href = {'https://www.google.com/#q=' + url} 
+                target={'_blank'} 
+                rel={"noopener noreferrer"} 
+                className={cx({deleteAnimation: this.state.deleted === stocks.stocks[stock].ticker})}
+              >
                 {stock}
               </a>
             </li>
@@ -50,6 +64,7 @@ class StockList extends Component {
   }
 
   render() {
+    const { stocks: { stockIndex }} = this.props;
     return (
       <ul className = {cx('stockList')}>
         { this.listStocks() }

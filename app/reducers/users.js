@@ -6,10 +6,14 @@ const message = (
   action
 ) => {
   switch(action.type) {
-    case types.NEW_STOCK_RECIEVED:
-      return 'New Stock for you';
+    case types.DELETE_STOCK_FAILURE:
+      return 'We were unable to delete your stock';
+    case types.HYDRATE_STOCKS_FAILURE:
+      return 'We could not retrieve stocks. Please try reloading the page at a later time.';
+    case types.ADD_STOCK_FAILURE: 
+      return 'Your stock could not be added or found. Make sure your ticker symbol is correct.';
     default: 
-      return state;
+      return '';
   }
 }
 

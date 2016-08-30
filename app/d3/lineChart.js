@@ -224,7 +224,24 @@ stockChart._addTooltip = function(data, scales, state, actions) {
     return (prev.indexOf(nextDate) === -1) ? prev.concat(nextDate) : prev;
   }, []).sort((a,b) => a - b);
 
+  const addZero = function(num) {
+      if(Number(num) < 10) {
+        return '0' + num;
+      }
+      return num;
+    }
+
+  const apiDate = function(date) { 
+    return date.getFullYear() + '-' + addZero((date.getMonth() + 1)) + '-' + addZero(date.getDate());
+  };
+
   const svg = d3.select('.groups');
+
+  //If the date is not selected set the date as the lastest date
+  if(!state.selected) {
+    const latest = new Date(sortedX[0]);
+    actions.selectDate({apiDate: apiDate(latest), d3Date: latest});
+  }
 
   //Remove previous versions of the map and focus
   svg.select('.mouseMap')
@@ -304,18 +321,13 @@ stockChart._addTooltip = function(data, scales, state, actions) {
     const hover = hoverData.bind(this)();
     const { d } = hover;
 
-    const month = function(month) {
-      if(Number(month) < 10) {
-        return '0' + month;
-      }
-      return month;
-    }
+    //Send out an action to set the selected date in the store
+    actions.selectDate({ d3Date: d, apiDate: apiDate(d)});
 
-    const apiDate = d.getFullYear() + '-' + month((d.getMonth() + 1)) + '-' + d.getDate();
-    actions.selectDate({ d3Date: d, apiDate});
-
+    //Remove the previously frozen lines
     freezeLines.selectAll('.freezeLine').remove();
 
+    //Append a new line
     freezeLines.append('line')
       .attr('class', 'freezeLine')
       .style('stroke', 'red')

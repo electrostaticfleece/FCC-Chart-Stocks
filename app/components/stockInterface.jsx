@@ -18,8 +18,10 @@ class StockInterface extends Component {
     e.preventDefault();
   }
 
+  
+
   render() {
-    const { stocks, chart, actions: {changeType, typing, addStock, changeView}, userInput, deleteStockRequest } = this.props;
+    const { stocks, chart, actions: {changeType, typing, addStock, changeView}, userInput, message, deleteStockRequest } = this.props;
     return (
       <div className={cx('interface')}>
         <form onSubmit = { this.handleSubmit } className={cx('interfaceForm')} >
@@ -33,6 +35,7 @@ class StockInterface extends Component {
             typing = { typing } 
             userInput = { userInput } 
             addStock = { addStock } 
+            message = { message }
           />
           <input type ={'submit'} hidden />
         </form>

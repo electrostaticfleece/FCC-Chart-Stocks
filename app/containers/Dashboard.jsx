@@ -18,7 +18,7 @@ class Dashboard extends Component {
 
 
   render() {
-    const { stocks, chart, updateDimensions, changeType, typing, selectDate, addStock, user: { input }, deleteStockRequest, changeView } = this.props;
+    const { stocks, chart, updateDimensions, changeType, typing, selectDate, addStock, user: { input, message }, deleteStockRequest, changeView } = this.props;
     return (
       <div className = {cx('dashboard')}>
         { stocks.stockIndex.length < 1 && !chart.loaded ? 
@@ -28,6 +28,7 @@ class Dashboard extends Component {
             chart = { chart }
             updateDimensions = { updateDimensions } 
             selectDate = {selectDate}
+            deleteStockRequest = { deleteStockRequest }
           /> 
         }
         <StockInterface 
@@ -36,6 +37,7 @@ class Dashboard extends Component {
           actions = { {changeType, typing, addStock, changeView} }
           userInput = { input }
           deleteStockRequest = { deleteStockRequest }
+          message = { message }
         />
       </div>
     )

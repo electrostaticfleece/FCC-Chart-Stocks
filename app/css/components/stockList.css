@@ -56,6 +56,11 @@
   color: var(--wildStrawberry);
 }
 
+.deleteAnimation {
+  animation-name: delete;
+  animation-duration: 0.25s;
+}
+
 @media (max-width: 900px) {
   .stockList {
     flex-direction: row;
@@ -69,5 +74,15 @@
   .stockListItem {
     padding: 5px 0;
     margin: 10px 40px 10px 0px;
+  }
+}
+
+@keyframes delete {
+   0% {
+    opacity: 1.0;
+    padding-left: 0px; }
+  100% {
+    opacity: 0.0;
+    padding-left: 30px;
   }
 }

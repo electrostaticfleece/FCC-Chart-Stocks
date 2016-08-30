@@ -26,7 +26,7 @@ class AddStock extends Component {
   }
 
   render() {
-    const { userInput } = this.props;
+    const { userInput, message } = this.props;
     return (
       <div>
         <label htmlFor={'addStock'} >
@@ -41,6 +41,7 @@ class AddStock extends Component {
           onKeyPress={this.handleSubmit}
           className={cx('search')}
         />
+        { message ? (<span className = {cx('messageWrap')}><p className={cx('message')}>{message}</p></span>) : null}
       </div>
     )
   }

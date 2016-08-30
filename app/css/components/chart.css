@@ -1,3 +1,8 @@
+@import '../common/typography';
+@import '../common/colors';
+
+/* Wraps */
+
 .displayWrap {
   width: 75%;
   display: flex;
@@ -9,8 +14,141 @@
   margin: 20px 30px 0 30px;
 }
 
+.stockDisplay {
+  margin: 0 30px 20px 70px;
+}
+
+/* Date */
+
+.date {
+  color: var(--electricLime);
+}
+
+/* Stock Display */ 
+.stockDisplay h2, .stockDisplay h3 {
+  margin-top: 0;
+}
+
+/* StockCard */
+
+
+.stockCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  background-color: #C0BFB8 ;
+  position: relative;
+  padding: 15px;
+  margin: 10px;
+  width: 270px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+/* Ticker Pod */
+
+.tickerPod {
+  padding: 2px 3px 2px 3px;
+  width: 35%;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 20px;
+  margin: 5px 0 10px 10px;
+}
+
+.ticker { 
+  margin-bottom: 0px;
+}
+
+/* Stock Card: Delete Button */
+
+.deleteStock {
+  position: absolute;
+  background: none;
+  color: white;
+  top: 10px;
+  right: 18px;
+  cursor: pointer;
+  font-size: var(--fontLarge);
+  font-weight: 700;
+}
+
+.deleteStock:hover {
+  color: var(--wildStrawberry);
+  border-color: var(--wildStrawberry);;
+}
+
+.stockName {
+  margin-top: 20px;
+  color: black;
+  font-size: var(--fontLarge);
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Data Points */
+
+.points {
+  display: flex;
+  width: 100%;
+  margin-left: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.point {
+  width: 120px;
+  text-align: left;
+  margin-right: 15px;
+  color: var(--mineShaft);
+  font-family: var(--fontQuicksand);
+  font-weight: 700;
+}
+
+.mainPoint {
+  color: var(--wildStrawberry);
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.removeAnimation {
+  animation-name: remove;
+  animation-duration: 0.25s;
+}
+
+/* Media Querys and Animations */
+
 @media (max-width: 900px) {
   .displayWrap {
     width: 100%;
+  }
+
+  .stockCards {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1004px) {
+  .stockCards {
+    justify-content: center;
+  }
+}
+
+@keyframes remove {
+  0% {
+    opacity: 1.0;
+    transform: translateY(0px); }
+  100% {
+    opacity: 0.0;
+    transform: translateY(-30px);
   }
 }

@@ -1,4 +1,5 @@
 @import '../common/colors';
+@import '../common/typography';
 
 .search {
   background-color: black;
@@ -12,8 +13,23 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
+.messageWrap {
+  width: 200px;
+}
+
+.message {
+  text-align: left;
+  font-family: var(--fontQuicksand);
+  width: 200px;
+  color: red;
+  font-size: 12px;
+}
+
 @media(max-width: 900px) {
   .search {
+    width: 300px;
+  }
+  .messageWrap {
     width: 300px;
   }
 }

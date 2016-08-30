@@ -1,5 +1,4 @@
 import { lookUpSingle, lookUpAll } from '../api';
-import * as types from '../../app/types';
 import {stocks as stockController} from '../db/controllers';
 
 const connections = [];
@@ -17,16 +16,15 @@ export function getSingleStock(socket){
 
     return lookUpSingle(ticker)
     .then((res) => {
-      console.log(res);
       const { data } = res;
 
-      socket.emit(types.NEW_STOCK_RECIEVED, data);
-      socket.broadcast.emit(types.NEW_STOCK_RECIEVED, data);
+      socket.emit('NEW_STOCK_RECIEVED', data);
+      socket.broadcast.emit('NEW_STOCK_RECIEVED', data);
       stockController.add(data);
     })
     .catch((err) => {
 
-      socket.emit(types.ADD_STOCK_FAILURE, {ticker: ticker, error: err.toString()});
+      socket.emit('ADD_STOCK_FAILURE', {ticker: ticker, error: err.toString()});
     });
   };
 };
@@ -41,12 +39,12 @@ export function hydrateStocks(socket) {
     .then(lookUpAll)
     .then((stocks) => {
 
-      socket.emit(types.HYDRATE_STOCKS_SUCCESS, stocks);
+      socket.emit('HYDRATE_STOCKS_SUCCESS', stocks);
     })
     .catch((err) => {
 
       console.log('Something went wrong hydrating the state');
-      socket.emit(types.HYDRATE_STOCKS_FAILURE, err);
+      socket.emit('HYDRATE_STOCKS_FAILURE', err);
     });
   };
 };
@@ -58,12 +56,11 @@ export function deleteStock(socket) {
   return (stock) => {
     return stockController.destroy(stock)
     .then(() => {
-      console.log('The stock before emit is: ', stock);
-      socket.broadcast.emit(types.STOCK_DELETED, stock);
+      socket.broadcast.emit('STOCK_DELETED', stock);
     })
     .catch((err) => {
 
-      socket.emit(types.DELETE_STOCK_FAILURE, {stock, error: err});
+      socket.emit('DELETE_STOCK_FAILURE', {stock, error: err});
     })
   }
 };
@@ -83,9 +80,9 @@ export default {
     logConnection
   },
   postConnection: {
-    [types.ADD_STOCK]: getSingleStock,
-    [types.HYDRATE_STOCKS_REQUEST]: hydrateStocks,
-    [types.DISCONNECT] : logDisconnect,
-    [types.DELETE_STOCK_REQUEST]: deleteStock
+    ['ADD_STOCK']: getSingleStock,
+    ['HYDRATE_STOCKS_REQUEST']: hydrateStocks,
+    ['DISCONNECT'] : logDisconnect,
+    ['DELETE_STOCK_REQUEST']: deleteStock
   }
 };

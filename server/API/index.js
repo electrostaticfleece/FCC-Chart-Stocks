@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as types from '../../app/types';
 
 const apiKey = process.env.QUANDL_API_KEY;
 const baseURL = "https://www.quandl.com/api/v3/datasets/WIKI/";

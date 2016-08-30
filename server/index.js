@@ -2,13 +2,15 @@ import express from 'express';
 import webpack from 'webpack';
 import http from 'http';
 import path from 'path';
-
+import expressConfig from './config/expressConfig';
 import socketServer from './socket-server';
 import { connect } from './db';
 
 const App = require('../public/assets/server');
 const app = express();
+
 const server = http.Server(app);
+
 app.set('socketPort', (process.env.PORT || 5000));
 
 //Connect to Postgres and register Schema
@@ -29,6 +31,8 @@ if(process.env.NODE_ENV === 'development') {
 
   app.use(require('webpack-hot-middleware')(compiler));
 }
+
+expressConfig(app);
 
 //All requests are passed down to be rendered on the server before 
 //being rendered on the client. 

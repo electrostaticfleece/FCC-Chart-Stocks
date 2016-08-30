@@ -1,4 +1,3 @@
-import * as types from '../../app/types';
 import events from './socketEvents';
 
 function bindSocket(socket, event, fn) {
